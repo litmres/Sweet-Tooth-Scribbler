@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfxdrool.wav-2a580b4ff24844c1b9ce469e023fc4e5.sample"
+
+[deps]
+
+source_file="res://audio/sfxdrool.wav"
+dest_files=[ "res://.import/sfxdrool.wav-2a580b4ff24844c1b9ce469e023fc4e5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
