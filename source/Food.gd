@@ -4,7 +4,7 @@ export var is_healthy = false
 export var food_points = 5.0
 
 export(String, "Donut", "Broccoli") var food_name
-export var food_cost = 50.0
+export var food_cost = 5.0
 
 onready var EatenAnimPlayer = get_node("EatenAnimPlayer")
 
@@ -20,7 +20,7 @@ func _ready():
 	offset = Vector2(30, 30)
 	connect_picked_up_signal(get_tree().root.get_node("Game"))
 	randomize()
-	food_cost = ceil(rand_range(30.0, 70.0))
+	food_cost = ceil(rand_range(2.0, 10.0))
 	food_grade = GRADE[randi() % GRADE.size()]
 	move_speed = ceil(rand_range(5, 100))
 	rect_rotation = rand_range(0, 360)
@@ -44,7 +44,12 @@ func get_eaten():
 
 
 func _on_mouse_entered():
-	is_mouse_over = true
+	if get_parent().current_funds >= food_cost:
+		is_mouse_over = true
+	else:
+		var FundsAnimation = get_parent().get_node("FundsAnimation")
+		if !FundsAnimation.is_playing():
+			FundsAnimation.play("Out of Funds")
 	modulate = Color(0.8, 0.8, 0.5, 1)
 
 

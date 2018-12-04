@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://FoodSpawner.tscn" type="PackedScene" id=2]
@@ -184,6 +184,61 @@ shadow_color = Color( 0, 0, 0, 0.6 )
 shadow_size = 0
 anti_aliasing = true
 anti_aliasing_size = 1
+
+[sub_resource type="Animation" id=16]
+
+resource_name = "Out of Funds"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("FundsLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FundsLabel:custom_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("FundsLabel:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("FundsLabel:rect_rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 5.0, -5.0, 0.0 ]
+}
 
 [sub_resource type="Animation" id=7]
 
@@ -1321,7 +1376,7 @@ tracks/0/keys = {
 "args": [ "...while I write masterpieces detailing your great deeds!" ],
 "method": "intro_say"
 }, {
-"args": [ "I like donuts." ],
+"args": [ "I like doughnuts." ],
 "method": "intro_say"
 }, {
 "args": [ 0 ],
@@ -1330,7 +1385,7 @@ tracks/0/keys = {
 "args": [ "Speak of the devil..." ],
 "method": "intro_say"
 }, {
-"args": [ "See that donut over there?" ],
+"args": [ "See that doughnut over there?" ],
 "method": "intro_say"
 }, {
 "args": [ "It'll help if you drag it over to me." ],
@@ -1462,7 +1517,7 @@ tracks/0/keys = {
 "args": [ "Ah, yes, things cost money! Duh!" ],
 "method": "intro_say"
 }, {
-"args": [ "But donuts keep me happy." ],
+"args": [ "But doughnuts keep me happy." ],
 "method": "intro_say"
 }, {
 "args": [ "Notice how happy I am now?" ],
@@ -1471,10 +1526,10 @@ tracks/0/keys = {
 "args": [ "I disagree with those..." ],
 "method": "intro_say"
 }, {
-"args": [ "...that say donuts are unhealthy!" ],
+"args": [ "...that say doughnuts are unhealthy!" ],
 "method": "intro_say"
 }, {
-"args": [ "Donuts are sooo good!" ],
+"args": [ "Doughnuts are sooo good!" ],
 "method": "intro_say"
 }, {
 "args": [ "If they're bad for health,..." ],
@@ -1495,7 +1550,7 @@ tracks/0/keys = {
 "args": [ "Don't bring it over here!" ],
 "method": "intro_say"
 }, {
-"args": [ "I do not like broccolis." ],
+"args": [ "I do not like broccoli." ],
 "method": "intro_say"
 } ]
 }
@@ -1678,7 +1733,7 @@ tracks/0/keys = {
 "args": [ "Just to let you know..." ],
 "method": "intro_say"
 }, {
-"args": [ "I could use more donuts!!" ],
+"args": [ "I could use more doughnuts!!" ],
 "method": "intro_say"
 }, {
 "args": [  ],
@@ -1929,7 +1984,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[node name="Game" type="Node2D" index="0"]
+[node name="Game" type="Node2D"]
 
 pause_mode = 2
 script = ExtResource( 1 )
@@ -2141,7 +2196,6 @@ override_selected_font_color = false
 [node name="FundsLabel" type="Label" parent="." index="10"]
 
 pause_mode = 1
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -2164,7 +2218,17 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="ReputationLabel" type="Label" parent="." index="11"]
+[node name="FundsAnimation" type="AnimationPlayer" parent="." index="11"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 2.0
+"anims/Out of Funds" = SubResource( 16 )
+blend_times = [  ]
+
+[node name="ReputationLabel" type="Label" parent="." index="12"]
 
 pause_mode = 1
 visible = false
@@ -2190,7 +2254,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="DeadlineLabel" type="Label" parent="." index="12"]
+[node name="DeadlineLabel" type="Label" parent="." index="13"]
 
 pause_mode = 1
 visible = false
@@ -2217,15 +2281,15 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="DeadlineTimer" type="Timer" parent="." index="13"]
+[node name="DeadlineTimer" type="Timer" parent="." index="14"]
 
 pause_mode = 1
 process_mode = 1
-wait_time = 10.0
+wait_time = 5.0
 one_shot = false
 autostart = false
 
-[node name="IntroAnimation" type="AnimationPlayer" parent="." index="14"]
+[node name="IntroAnimation" type="AnimationPlayer" parent="." index="15"]
 
 root_node = NodePath("..")
 autoplay = ""
@@ -2239,7 +2303,7 @@ anims/Intro4 = SubResource( 10 )
 anims/Intro5 = SubResource( 11 )
 blend_times = [  ]
 
-[node name="IntroMonologue" type="Label" parent="." index="15"]
+[node name="IntroMonologue" type="Label" parent="." index="16"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -2263,7 +2327,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="IntroName" type="LineEdit" parent="." index="16"]
+[node name="IntroName" type="LineEdit" parent="." index="17"]
 
 visible = false
 anchor_left = 0.0
@@ -2294,7 +2358,7 @@ caret_blink = true
 caret_blink_speed = 0.65
 caret_position = 0
 
-[node name="IntroNameLabel" type="Label" parent="." index="17"]
+[node name="IntroNameLabel" type="Label" parent="." index="18"]
 
 visible = false
 anchor_left = 0.0
@@ -2317,14 +2381,14 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="IntroTimer" type="Timer" parent="." index="18"]
+[node name="IntroTimer" type="Timer" parent="." index="19"]
 
 process_mode = 1
 wait_time = 1.0
 one_shot = false
 autostart = false
 
-[node name="IntroSkip" type="Label" parent="." index="19"]
+[node name="IntroSkip" type="Label" parent="." index="20"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -2345,7 +2409,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="MenuCamera" type="Camera2D" parent="." index="20"]
+[node name="MenuCamera" type="Camera2D" parent="." index="21"]
 
 pause_mode = 2
 position = Vector2( 0, 640 )
@@ -2372,19 +2436,19 @@ editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
 
-[node name="MenuAnimation" type="AnimationPlayer" parent="." index="21"]
+[node name="MenuAnimation" type="AnimationPlayer" parent="." index="22"]
 
 pause_mode = 2
 root_node = NodePath("..")
 autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
-playback_speed = 1.0
+playback_speed = 10.0
 "anims/To Game" = SubResource( 14 )
 "anims/To Menu" = SubResource( 15 )
 blend_times = [  ]
 
-[node name="GameOverPoem" type="RichTextLabel" parent="." index="22"]
+[node name="GameOverPoem" type="RichTextLabel" parent="." index="23"]
 
 pause_mode = 1
 anchor_left = 0.0
@@ -2414,7 +2478,7 @@ scroll_following = false
 selection_enabled = false
 override_selected_font_color = false
 
-[node name="TitleSprite" type="Sprite" parent="." index="23"]
+[node name="TitleSprite" type="Sprite" parent="." index="24"]
 
 position = Vector2( 533.032, 790.964 )
 scale = Vector2( 0.7, 0.7 )
@@ -2516,7 +2580,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="NewGame" type="TextureButton" parent="." index="24"]
+[node name="NewGame" type="TextureButton" parent="." index="25"]
 
 pause_mode = 2
 anchor_left = 0.0
@@ -2575,7 +2639,7 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="Restart" type="TextureButton" parent="." index="25"]
+[node name="Restart" type="TextureButton" parent="." index="26"]
 
 pause_mode = 2
 anchor_left = 0.0
@@ -2634,7 +2698,7 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="Menu" type="Button" parent="." index="26"]
+[node name="Menu" type="Button" parent="." index="27"]
 
 visible = false
 anchor_left = 0.0
@@ -2658,7 +2722,7 @@ flat = false
 align = 1
 script = ExtResource( 12 )
 
-[node name="MusicMenu" type="AudioStreamPlayer" parent="." index="27"]
+[node name="MusicMenu" type="AudioStreamPlayer" parent="." index="28"]
 
 stream = ExtResource( 13 )
 volume_db = -5.0
@@ -2667,7 +2731,7 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="MusicIntro" type="AudioStreamPlayer" parent="." index="28"]
+[node name="MusicIntro" type="AudioStreamPlayer" parent="." index="29"]
 
 stream = ExtResource( 14 )
 volume_db = 0.0
@@ -2676,7 +2740,7 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="MusicPlay" type="AudioStreamPlayer" parent="." index="29"]
+[node name="MusicPlay" type="AudioStreamPlayer" parent="." index="30"]
 
 stream = ExtResource( 15 )
 volume_db = -8.0
@@ -2685,7 +2749,7 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="MusicGameOver" type="AudioStreamPlayer" parent="." index="30"]
+[node name="MusicGameOver" type="AudioStreamPlayer" parent="." index="31"]
 
 stream = ExtResource( 16 )
 volume_db = -2.0
@@ -2694,7 +2758,7 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="MusicTimer" type="Timer" parent="." index="31"]
+[node name="MusicTimer" type="Timer" parent="." index="32"]
 
 process_mode = 1
 wait_time = 0.1

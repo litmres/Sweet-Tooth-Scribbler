@@ -42,7 +42,7 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="UnhealthyFood" type="TextureButton"]
+[node name="UnhealthyFood" type="TextureButton" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -67,7 +67,7 @@ script = ExtResource( 2 )
 is_healthy = false
 food_points = 5.0
 food_name = "Donut"
-food_cost = 50.0
+food_cost = 5.0
 
 [node name="Area2D" type="Area2D" parent="." index="0"]
 

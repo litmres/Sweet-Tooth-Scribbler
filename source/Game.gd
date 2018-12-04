@@ -1,6 +1,7 @@
 extends Node2D
 
 signal something_held(thing)
+signal paper_compiled
 
 onready var MinPosPaper = get_node("MinPosPaper")
 onready var MaxPosPaper = get_node("MaxPosPaper")
@@ -42,10 +43,10 @@ var is_picking = false
 
 var displayed_text_array = []
 
-var paper_compiled = []
+var paper_scores = []
 var last_poem = []
 
-var current_funds = 10000.00
+var current_funds = 100.00
 var salary = 100.0
 
 var days_to_deadline = 5
@@ -167,17 +168,7 @@ func pause_game_toggle():
 				GameOverPoem.bbcode_text += "[/center]\n"
 
 	if is_game_over:
-#		GameOverPoem.bbcode_text = ""
 		DeadlineTimer.stop()
-#		if last_poem != null:
-#			GameOverPoem.bbcode_text += "[center]OH MY "
-#			GameOverPoem.bbcode_text += Scribbler.get_next_adjective().to_upper() + " " + Scribbler.name_of_person.to_upper()
-#			GameOverPoem.bbcode_text += "![/center]"
-#			GameOverPoem.bbcode_text += "\n\n\n"
-#			for i in last_poem.size():
-#				GameOverPoem.bbcode_text += "[center]"
-#				GameOverPoem.bbcode_text += last_poem[i]
-#				GameOverPoem.bbcode_text += "[/center]\n"
 		play_music(3)
 
 
@@ -282,6 +273,10 @@ func _on_Scribbler_mood_changed(mood, is_increasing):
 func _on_Scribbler_funds_spent(funds):
 	current_funds -= funds
 	FundsLabel.text = "FUNDS: $" + String(current_funds)
+	if current_funds <= 0:
+		var FundsAnimation = get_node("FundsAnimation")
+		if !FundsAnimation.is_playing():
+			FundsAnimation.play("Out of Funds")
 
 
 func _on_DeadlineTimer_timeout():
@@ -293,17 +288,15 @@ func _on_DeadlineTimer_timeout():
 	else:
 		Scribbler.set_writing_speed(1)
 		days_to_deadline = randi() % prev_days_to_deadline + prev_days_to_deadline
-		DeadlineLabel.text = "Deadline: PUBLISHING NOW!"
+		DeadlineLabel.text = "Deadline: JUST PUBLISHED"
 
 		var score_from_current_published = 0
-		for i in range(paper_compiled.size()):
-			score_from_current_published += paper_compiled[i].score
-			paper_compiled[i].target_pos = Vector2(rand_range(600, 800), -200)
-			randomize()
-			paper_compiled[i].lerp_speed = rand_range(1, 5)
-#			paper_compiled[i].set_process(true)
-#			paper_compiled[i].queue_free()
-		paper_compiled = []
+		for i in range(paper_scores.size()):
+			if paper_scores[i]:
+				score_from_current_published += paper_scores[i]
+		emit_signal("paper_compiled")
+
+		paper_scores = []
 
 		reputation += score_from_current_published
 

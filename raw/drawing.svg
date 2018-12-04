@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.3535534"
-     inkscape:cx="-1095.4389"
-     inkscape:cy="262.59787"
+     inkscape:zoom="0.7071068"
+     inkscape:cx="-1096.9541"
+     inkscape:cy="61.011583"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -600,13 +600,13 @@
          style="opacity:1;vector-effect:none;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:0.35335985;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:25.70868874;stroke-opacity:1;paint-order:stroke fill markers" />
     </g>
     <rect
-       y="140.51187"
-       x="-463.23755"
+       y="233.30785"
+       x="-459.86996"
        height="209.05316"
        width="172.94783"
        id="rect1045"
        style="opacity:1;vector-effect:none;fill:#9377a5;fill-opacity:1;stroke:#f9f9f9;stroke-width:7.8111062;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:25.70868874;stroke-opacity:1;paint-order:stroke fill markers"
-       inkscape:export-filename="D:\DevWorkFolder\Projects\LD43\source\sprites\table.png"
+       inkscape:export-filename="D:\DevWorkFolder\Projects\Sweet-Tooth-Scribbler\source\sprites\table.png"
        inkscape:export-xdpi="95.992798"
        inkscape:export-ydpi="95.992798" />
     <g
@@ -1406,5 +1406,19 @@
        inkscape:export-filename="D:\DevWorkFolder\Projects\LD43\source\sprites\icon_star.png"
        inkscape:export-xdpi="95.992798"
        inkscape:export-ydpi="95.992798" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-254.4406"
+       y="213.18428"
+       id="text1197"
+       inkscape:export-filename="D:\DevWorkFolder\Projects\Sweet-Tooth-Scribbler\source\sprites\moneywhere.png"
+       inkscape:export-xdpi="95.992798"
+       inkscape:export-ydpi="95.992798"><tspan
+         sodipodi:role="line"
+         id="tspan1195"
+         x="-254.4406"
+         y="213.18428"
+         style="fill:#ffffff;stroke-width:0.26458332px">$?</tspan></text>
   </g>
 </svg>

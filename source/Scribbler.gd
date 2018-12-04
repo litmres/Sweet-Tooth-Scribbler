@@ -16,6 +16,8 @@ const negative = "res://negative_adjectives.txt"
 const nouns = "res://nouns.txt"
 const verbs = "res://verbs.txt"
 
+onready var MoneyWhereSprites = [get_node("MoneyWhere1"), get_node("MoneyWhere2"), get_node("MoneyWhere3")]
+
 onready var WritingAnimation = get_node("WritingAnimation")
 onready var WrittenAnimation = get_node("WrittenAnimation")
 onready var EatingAnimation = get_node("EatingAnimation")
@@ -41,7 +43,12 @@ onready var ScribblerSprites = [
 	get_node("Arm_R/Hand_R")
 ]
 
-onready var Sfx = [get_node("SfxEat"), get_node("SfxDrool"), get_node("SfxEeeww"), get_node("SfxTalk")]
+onready var Sfx = [get_node("SfxEat"),
+				   get_node("SfxDrool"),
+				   get_node("SfxEeeww"),
+				   get_node("SfxTalk"),
+				   get_node("SfxWrite"),
+				   get_node("SfxPaper")]
 
 var current_sfx
 
@@ -69,6 +76,7 @@ var last_food_points = 1.0
 
 var is_writing = false
 
+var next_paper_cost = 0
 
 func _ready():
 	if !is_connected("health_changed", get_parent(), "_on_Scribbler_health_changed"):
@@ -100,6 +108,14 @@ func play_sfx(which_sfx):
 		Sfx[which_sfx].play()
 
 	current_sfx = Sfx[which_sfx]
+
+
+func play_SfxWrite(can_play):
+	if can_play:
+		if !Sfx[4].is_playing():
+			Sfx[4].play()
+	else:
+		Sfx[4].stop()
 
 
 func start_writing():
@@ -134,6 +150,11 @@ func get_writing_speed():
 	return WritingAnimation.playback_speed
 
 
+func resume_from_out_of_funds():
+	if get_parent().current_funds >= next_paper_cost:
+		start_writing()
+
+
 func on_written():
 	WritingAnimation.stop()
 	var Paper = PaperScn.instance()
@@ -144,20 +165,31 @@ func on_written():
 	Paper.poem = stitched_sentences
 	Paper.score = calculated_score
 	Paper.show_written_lines(Paper.poem.size())
+
+	if !get_parent().is_connected("paper_compiled", Paper, "_on_paper_compiled"):
+		get_parent().connect("paper_compiled", Paper, "_on_paper_compiled")
+
+	next_paper_cost = Paper.paper_cost
 	emit_signal("funds_spent", Paper.paper_cost)
 
 	# TODO: save stitched sentences
 
 	stitched_sentences = []
 	calculated_score = 0
-	start_writing()
+
+	if get_parent().current_funds >= Paper.paper_cost:
+		start_writing()
+	elif !WritingAnimation.is_playing():
+		WritingAnimation.play("Out of Funds")
+
+	if !Sfx[5].is_playing():
+		Sfx[5].play()
 
 
 func write_sentence():
 	stitched_sentences.push_back(get_next_sentence())
 	if mood < 0 && randf() * mood > mood * 0.8:
 		on_written()
-#	print(get_next_sentence())
 
 
 func get_rand_positive():
@@ -327,18 +359,18 @@ func died():
 
 func _on_StomachTimer_timeout():
 	if stomach > 0:
-		stomach -= 0.5 + rand_range(1, WritingAnimation.playback_speed)
+		stomach -= rand_range(1, 2 * WritingAnimation.playback_speed) + 0.5
 		emit_signal("stomach_changed", stomach)
 
 	if stomach > MAX_STOMACH * 0.5:
 		if health < MAX_HEALTH:
-			health += last_food_points * 0.001
+			health += last_food_points * 0.01
 			emit_signal("health_changed", health)
 
 	if stomach <= 0:
 		if health > 0:
-			health -= 0.5
-	emit_signal("health_changed", health)
+			health -= 1
+			emit_signal("health_changed", health)
 
 
 func _on_MoodTimer_timeout():

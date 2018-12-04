@@ -17,10 +17,11 @@ onready var Lines = [get_node("Sprite"),
 var poem = []
 var score = 0
 
-var paper_cost = 20
+var paper_cost = 2
 
 var target_pos = Vector2(700, 330)
 var lerp_speed = 5
+var ready_to_be_compiled = false
 
 var current_color = Color(1, 1, 1, 1)
 
@@ -68,18 +69,24 @@ func _on_mouse_exited():
 	emit_signal("displayed_poem", poem, false)
 
 
+func _on_paper_compiled():
+	if ready_to_be_compiled:
+		randomize()
+		lerp_speed = rand_range(1, 5)
+		target_pos = Vector2(rand_range(600, 800), -200)
+
+
 func _on_Timer_timeout():
 	set_process(true)
 	disconnect_picked_up_signal(get_parent())
 #	DestroyTimer.start()
 	raise()
 	get_parent().last_poem = poem
-	get_parent().paper_compiled.append(self)
-
-
-func _on_DestroyTimer_timeout():
-	queue_free()
+	get_parent().paper_scores.append(score)
+	ready_to_be_compiled = true
 
 
 func _on_VisibilityNotifier2D_viewport_exited(viewport):
-	queue_free()
+	if !get_tree().paused:
+		queue_free()
+

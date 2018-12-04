@@ -12,6 +12,7 @@ extents = Vector2( 41.45, 49.8405 )
 
 [node name="Paper" type="TextureButton"]
 
+pause_mode = 1
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -124,19 +125,12 @@ wait_time = 5.0
 one_shot = true
 autostart = true
 
-[node name="DestroyTimer" type="Timer" parent="." index="9"]
-
-process_mode = 1
-wait_time = 30.0
-one_shot = true
-autostart = false
-
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="10"]
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="9"]
 
 position = Vector2( 75.0735, 51.2406 )
 rect = Rect2( -10, -10, 20, 20 )
 
-[node name="HoverSfx" type="AudioStreamPlayer" parent="." index="11"]
+[node name="HoverSfx" type="AudioStreamPlayer" parent="." index="10"]
 
 stream = ExtResource( 4 )
 volume_db = -10.0
@@ -146,8 +140,6 @@ mix_target = 0
 bus = "Master"
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-
-[connection signal="timeout" from="DestroyTimer" to="." method="_on_DestroyTimer_timeout"]
 
 [connection signal="viewport_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_viewport_exited"]
 
