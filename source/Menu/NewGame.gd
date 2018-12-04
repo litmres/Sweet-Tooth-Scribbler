@@ -31,6 +31,7 @@ func _on_NewGame_pressed():
 
 
 func _on_NewGame_visibility_changed():
+	modulate = Color(1, 1, 1, 1)
 	if !get_parent().is_game_over:
 		if get_parent().is_game_started:
 			label.text = "Continue"

@@ -162,6 +162,7 @@ func on_written():
 	var random_x = rand_range(MinPosPaper.position.x, MaxPosPaper.position.x)
 	var random_y = rand_range(MinPosPaper.position.y, MaxPosPaper.position.y)
 	Paper.rect_position = Vector2(random_x, random_y)
+	Paper.rect_rotation = rand_range(-10, 10)
 	Paper.poem = stitched_sentences
 	Paper.score = calculated_score
 	Paper.show_written_lines(Paper.poem.size())

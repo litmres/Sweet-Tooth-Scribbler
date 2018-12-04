@@ -111,7 +111,7 @@ func _process(delta):
 	else:
 		IntroSkip.hide()
 
-	if is_game_started && !get_tree().paused:
+	if !is_intro && is_game_started && !get_tree().paused:
 		if Input.is_action_just_pressed("ui_cancel"):
 			if !MenuAnimation.is_playing():
 				MenuAnimation.play("To Menu")
@@ -169,7 +169,8 @@ func pause_game_toggle():
 
 	if is_game_over:
 		DeadlineTimer.stop()
-		play_music(3)
+		if !MusicList[3].is_playing():
+			play_music(3)
 
 
 func from_menu():
@@ -178,12 +179,14 @@ func from_menu():
 	else:
 		pause_game_toggle()
 
-	if is_intro:
-		play_music(1)
-	if is_gameplay_started:
-		play_music(2)
 	if is_game_over:
-		play_music(3)
+		if !MusicList[3].is_playing():
+			play_music(3)
+	else:
+		if is_intro:
+			play_music(1)
+		if is_gameplay_started:
+			play_music(2)
 
 
 func to_menu():
